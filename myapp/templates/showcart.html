@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Showcart</title>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Product Image</th>
+        <th>Product Quantity</th>
+        <th>Product Price</th>
+        <th>Total</th>
+        <th colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody id="productTableBody">
+        <!-- This section will be populated with form data -->
+        {% for i in cartdata %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.productid }}</td>
+        <td><img src="/media/{{ i.productimage }}" height="80px" width="80px"></td>
+        <td>
+            <a href="/decreaseitem/{{ i.id }}" class="btn bg-danger text-white">-</a>
+            {{ i.quantity }}
+            <a href="/increaseitem/{{ i.id }}" class="btn bg-danger text-white">+</a>
+        </td>
+        <td>Rs. {{ i.productid.productprice }}</td>
+        <td>Total {{ i.totalamount }}</td>
+        <td><a href="/removeitem/{{ i.id }}" class="btn bg-danger text-white">Delete</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+<div class="total">
+    <form method="post" action="/placeorder">
+        {% csrf_token %}
+        <p>Total Amount: Rs. {{ finaltotal }} </p>
+        <input type="hidden" name="finaltotal" value="{{ finaltotal }}">
+        <div class="form-group">
+            <label for="productName">Your Name: </label>
+            <input type="text" name="uname" class="form-control" id="productName" required="">
+        </div>
+        <div class="form-group">
+            <label for="productDescription">Address: </label>
+            <textarea class="form-control" name="address" id="productDescription" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Payment Method: </label>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="payment" id="cod" value="cod">
+            <label class="form-check-label" for="cod">COD</label>
+            </div>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="payment" id="paynow" value="pay now">
+            <label class="form-check-label" for="paynow">Pay Now</label>
+            </div>
+        </div>
+        <div id="paymentDetails" style="display: none;">
+            <div class="form-group">
+                <input type="text" class="form-control" id="cardno" name="cardno">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="expiry">Expiry Date: </label>
+                <input type="text" class="form-control" id="expiry" name="expiry">
+                <div id="expiryHelp" class="invalid-feedback">Please enter a valid expiry date</div>
+                <div class="form-group col-md-6">
+                <label for="cvv">CVV: </label>
+                <input type="text" class="form-control" id="cvv" name="cvv">
+                <div id="cvvHelp" class="invalid-fedback">Please enter a valid 3-digit cvv.</div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn bg-primary text-white">Place Order</button>
+    </form>
+</div>
+</body>
+</html>

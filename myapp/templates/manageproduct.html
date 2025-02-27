@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>manageproduct</title>
+</head>
+<body>
+<div>
+<h1><b>Manage Product Details</b></h1>
+<table align="center" border="1" width="70%" >
+    <tr>
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Product Description</th>
+        <th>Product Image</th>
+        <th colspan="2">Action</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{ i.productname }}</td>
+        <td>{{ i.productprice }}</td>
+        <td>{{ i.productdesc }}</td>
+        <td><img src="/media/{{ i.productimage }}" align="center" height="80px" width="80px"></td>
+        <td><button><a href="/addproduct/{{ i.id }}" class="btn bg-success text-white">Edit</a></button></td>
+        <td><button><a href="/delete/{{ i.id }}" class="btn bg-danger text-white">Delete</a></button></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+
+
+ <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+</body>
+</html>
